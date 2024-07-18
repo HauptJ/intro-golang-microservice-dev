@@ -1,0 +1,42 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: golang-api-github-deployment
+  labels:
+    app: golang-api-github
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: golang-api-github
+  template:
+    metadata:
+      labels:
+        app: golang-api-github
+    spec:
+      containers:
+      - name: golang-api-github-deployment
+        image: hauptj/golang-api-github:latest
+        env:
+        - name: TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: gh-api-token
+              key: token
+        resources:
+          requests:
+            cpu: "100m"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8880
+        #livenessProbe:
+        #  initialDelaySeconds: 1
+        #  periodSeconds: 2
+        #  timeoutSeconds: 1
+        #  successThreshold: 1
+        #  failureThreshold: 1
+        #  httpGet:
+        #    host:
+        #    scheme: HTTP
+        #    path: /followers/hauptj
+        #    port: 8880

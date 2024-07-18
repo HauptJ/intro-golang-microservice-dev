@@ -1,0 +1,27 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: k8s-demo-ingress
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: "dns.do.hauptj.com"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: golang-api-dns-deployment-cluster-ip
+            port:
+              number: 8080
+  - host: "github.do.hauptj.com"
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: golang-api-github-deployment-cluster-ip
+            port:
+              number: 8880
