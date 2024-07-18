@@ -1,0 +1,25 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: golang-api-dns-deployment
+  labels:
+    app: golang-api-dns
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: golang-api-dns
+  template:
+    metadata:
+      labels:
+        app: golang-api-dns
+    spec:
+      containers:
+      - name: golang-api-dns-deployment
+        image: hauptj/golang-api-dns:latest
+        resources:
+          requests:
+            cpu: "100m"
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080

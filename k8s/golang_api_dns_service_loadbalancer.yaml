@@ -1,0 +1,16 @@
+# Indicates this as a service
+kind: Service
+apiVersion: v1
+metadata:
+  # Service name
+  name: golang-api-dns-deployment-loadbalancer
+spec:
+  type: LoadBalancer
+  selector:
+  # Selector for deployment
+    app: golang-api-dns
+  ports:
+    # Port Map
+    - port: 8090
+      targetPort: 8080
+      protocol: TCP
